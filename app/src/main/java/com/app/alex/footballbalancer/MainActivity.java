@@ -2,7 +2,6 @@ package com.app.alex.footballbalancer;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -19,15 +18,17 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
+import roboguice.activity.RoboActionBarActivity;
+import roboguice.inject.ContentView;
 
-public class MainActivity extends ActionBarActivity {
+@ContentView(R.layout.activity_main)
+public class MainActivity extends RoboActionBarActivity {
 
     private Drawer.Result drawerResult = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
