@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Material DEFAULT colors -->
-    <color name="material_drawer_primary">#673AB7</color>
-    <color name="material_drawer_primary_dark">#512DA8</color>
-    <color name="material_drawer_primary_light">#D1C4E9</color>
-    <color name="material_drawer_accent">#FF5722</color>
+    <color name="material_drawer_primary">#009688</color>
+    <color name="material_drawer_primary_dark">#00796B</color>
+    <color name="material_drawer_primary_light">#B2DFDB</color>
+    <color name="material_drawer_accent">#607D8B</color>
 
     <!-- OVERWRITE THESE COLORS FOR A LIGHT THEME -->
     <!-- MaterialDrawer DEFAULT colors -->
