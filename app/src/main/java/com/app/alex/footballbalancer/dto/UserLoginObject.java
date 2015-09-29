@@ -1,12 +1,15 @@
 package com.app.alex.footballbalancer.dto;
 
 
+import com.google.inject.Singleton;
+
 import java.io.Serializable;
 
 /**
  * Created by alex on 9/25/15.
  */
-public class UserLoginObject {
+@Singleton
+public class UserLoginObject implements Serializable {
     private String id;
     private String firstName;
     private String lastName;
@@ -39,5 +42,14 @@ public class UserLoginObject {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    @Override
+    public String toString() {
+        return "UserLoginObject{" +
+                "id='" + id + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                '}';
     }
 }

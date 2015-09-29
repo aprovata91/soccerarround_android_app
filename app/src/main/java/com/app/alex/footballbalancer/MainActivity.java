@@ -2,6 +2,7 @@ package com.app.alex.footballbalancer;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -9,9 +10,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.app.alex.footballbalancer.dto.UserLoginObject;
+import com.google.inject.Inject;
 import com.mikepenz.iconics.typeface.FontAwesome;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
@@ -20,15 +24,39 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import roboguice.activity.RoboActionBarActivity;
 import roboguice.inject.ContentView;
+import roboguice.inject.InjectView;
 
 @ContentView(R.layout.activity_main)
 public class MainActivity extends RoboActionBarActivity {
+
+    @InjectView(R.id.id_value)
+    private TextView mIdTextView;
+
+    @InjectView(R.id.FirstName_value)
+    private TextView mFirstNameTextView;
+
+    @InjectView(R.id.LastName_value)
+    private TextView mLastNameTextView;
+
+    private UserLoginObject userLoginObject;
 
     private Drawer.Result drawerResult = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent intent = getIntent();
+        userLoginObject = (UserLoginObject) intent.getSerializableExtra("UserLoginObject");
+
+        mIdTextView.setText(userLoginObject.getId());
+        mFirstNameTextView.setText(userLoginObject.getFirstName());
+        mLastNameTextView.setText(userLoginObject.getLastName());
+
+        initDrawer();
+    }
+
+    public void initDrawer(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -46,27 +74,27 @@ public class MainActivity extends RoboActionBarActivity {
                         new PrimaryDrawerItem().withName(R.string.drawer_item_help).withIcon(FontAwesome.Icon.faw_cog),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_open_source).withIcon(FontAwesome.Icon.faw_question)
                 ).withOnDrawerListener(new Drawer.OnDrawerListener() {
-            @Override
-            public void onDrawerOpened(View view) {
-                InputMethodManager inputMethodManager = (InputMethodManager) MainActivity.this.getSystemService(Activity.INPUT_METHOD_SERVICE);
-                inputMethodManager.hideSoftInputFromWindow(MainActivity.this.getCurrentFocus().getWindowToken(), 0);
-            }
+                    @Override
+                    public void onDrawerOpened(View view) {
+                        InputMethodManager inputMethodManager = (InputMethodManager) MainActivity.this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+                        inputMethodManager.hideSoftInputFromWindow(MainActivity.this.getCurrentFocus().getWindowToken(), 0);
+                    }
 
-            @Override
-            public void onDrawerClosed(View view) {
+                    @Override
+                    public void onDrawerClosed(View view) {
 
-            }
-        }).withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l, IDrawerItem iDrawerItem) {
-                Context context = getApplicationContext();
-                CharSequence text = "Hello toast!";
-                int duration = Toast.LENGTH_SHORT;
+                    }
+                }).withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l, IDrawerItem iDrawerItem) {
+                        Context context = getApplicationContext();
+                        CharSequence text = "Hello toast!";
+                        int duration = Toast.LENGTH_SHORT;
 
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
-            }
-        })
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
+                    }
+                })
                 .build();
     }
 

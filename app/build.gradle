@@ -10,6 +10,7 @@ android {
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -17,8 +18,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-}
+    lintOptions {
+        abortOnError false
+    }
 
+    sourceSets{
+        androidTest {
+            setRoot('src/test')
+        }
+    }
+}
 project.dependencies {
     compile 'org.roboguice:roboguice:3.+'
     provided 'org.roboguice:roboblender:3.+'
@@ -26,10 +35,14 @@ project.dependencies {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile "org.robolectric:robolectric:3.0"
+    testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:22.2.1'
+    testCompile 'org.hamcrest:hamcrest-core:1.1'
+    testCompile 'org.hamcrest:hamcrest-library:1.1'
+    testCompile 'org.hamcrest:hamcrest-integration:1.1'
     compile 'com.squareup.retrofit:retrofit:2.0.0-beta1'
     compile 'com.squareup.retrofit:converter-gson:2.0.0-beta1'
-    compile 'com.squareup.retrofit:adapter-rxjava:2.0.0-beta1'
     compile 'de.greenrobot:eventbus:2.4.0'
     compile('com.mikepenz.materialdrawer:library:0.9.5@aar') {
         transitive = true
