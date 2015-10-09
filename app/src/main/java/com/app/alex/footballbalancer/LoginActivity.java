@@ -9,9 +9,11 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.app.alex.footballbalancer.REST.ApiEndPointService;
+import com.app.alex.footballbalancer.dto.SignInObject;
 import com.app.alex.footballbalancer.dto.UserLoginObject;
 
 
+import retrofit.Call;
 import retrofit.Callback;
 import retrofit.GsonConverterFactory;
 import retrofit.Response;
@@ -29,6 +31,9 @@ public class LoginActivity extends RoboActivity {
     String TAG = "Login activity";
 
     private UserLoginObject object;
+    private ProgressDialog progress;
+    private Retrofit retrofit;
+    ApiEndPointService service;
 
     @InjectView(R.id.login)
     private EditText mLoginEditText;
@@ -42,27 +47,64 @@ public class LoginActivity extends RoboActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        final SignInObject obj = new SignInObject();
+        String log = "user1";
+        mLoginEditText.setText(log);
+        String pass = "pass";
+        mPasswordEditText.setText(pass);
+
         mLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                configureRetrofitRequest();
+                setUrl(ApiEndPointService.BASE_URL);
+                makeLoginRequest();
             }
         });
     }
 
-    public void configureRetrofitRequest(){
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(ApiEndPointService.BASE_URL)
+    public void setUrl(String url){
+        retrofit = new Retrofit.Builder()
+                .baseUrl(url)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
+        service = retrofit.create(ApiEndPointService.class);
+    }
 
-        ApiEndPointService service = retrofit.create(ApiEndPointService.class);
-
-        retrofit.Call<UserLoginObject> userInfo = service.getUser();
-        final ProgressDialog progress = new ProgressDialog(this);
+    public void showProgressDialog(){
+        progress = new ProgressDialog(this);
         progress.setTitle("Loading");
         progress.setMessage("Wait while loading...");
         progress.show();
+    }
+
+    public void makeLoginRequest(){
+        Call<Void> loginRequest = service.attemptLogin("user1","pass");
+        showProgressDialog();
+
+        loginRequest.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Response<Void> response) {
+                progress.dismiss();
+                int stausCode = response.code();
+                makeGetUserRequest();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                progress.dismiss();
+                Log.d(TAG, t.toString());
+                t.printStackTrace();
+                Log.e("", "");
+            }
+        });
+    }
+
+    public void makeGetUserRequest(){
+
+        Call<UserLoginObject> userInfo = service.getUser();
+        showProgressDialog();
+
 
         userInfo.enqueue(new Callback<UserLoginObject>() {
             @Override
@@ -81,6 +123,8 @@ public class LoginActivity extends RoboActivity {
             public void onFailure(Throwable t) {
                 progress.dismiss();
                 Log.d(TAG, t.toString());
+                t.printStackTrace();
+                Log.e("","");
             }
         });
     }
