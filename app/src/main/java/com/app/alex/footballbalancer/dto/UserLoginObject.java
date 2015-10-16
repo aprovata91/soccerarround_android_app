@@ -8,7 +8,7 @@ import java.io.Serializable;
 /**
  * Created by alex on 9/25/15.
  */
-@Singleton
+
 public class UserLoginObject implements Serializable {
     private String id;
     private String firstName;

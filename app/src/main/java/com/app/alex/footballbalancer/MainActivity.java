@@ -22,6 +22,8 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
+import java.util.ArrayList;
+
 import roboguice.activity.RoboActionBarActivity;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
@@ -38,7 +40,7 @@ public class MainActivity extends RoboActionBarActivity {
     @InjectView(R.id.LastName_value)
     private TextView mLastNameTextView;
 
-    private UserLoginObject userLoginObject;
+    private ArrayList<UserLoginObject> userLoginObject;
 
     private Drawer.Result drawerResult = null;
 
@@ -47,11 +49,11 @@ public class MainActivity extends RoboActionBarActivity {
         super.onCreate(savedInstanceState);
 
         Intent intent = getIntent();
-        userLoginObject = (UserLoginObject) intent.getSerializableExtra("UserLoginObject");
+        userLoginObject = (ArrayList<UserLoginObject>) intent.getSerializableExtra("UserLoginObject");
 
-        mIdTextView.setText(userLoginObject.getId());
+       /* mIdTextView.setText(userLoginObject.getId());
         mFirstNameTextView.setText(userLoginObject.getFirstName());
-        mLastNameTextView.setText(userLoginObject.getLastName());
+        mLastNameTextView.setText(userLoginObject.getLastName());*/
 
         initDrawer();
     }
