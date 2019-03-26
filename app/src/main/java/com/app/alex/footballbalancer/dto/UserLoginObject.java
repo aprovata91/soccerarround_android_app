@@ -14,12 +14,14 @@ public class UserLoginObject implements Serializable {
     private String firstName;
     private String lastName;
     private String taxNumber;
+    private String passportNumber;
 
-    public UserLoginObject(String id, String firstName, String lastName, String taxNumber) {
+    public UserLoginObject(String id, String firstName, String lastName, String taxNumber, String passportNumber) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.taxNumber = taxNumber;
+        this.passportNumber = passportNumber;
     }
 
     public String getId() {
@@ -52,6 +54,14 @@ public class UserLoginObject implements Serializable {
 
     public void setTaxNumber(String taxNumber) {
         this.taxNumber = taxNumber;
+    }
+
+    public String getPassportNumber() {
+        return passportNumber;
+    }
+
+    public void setPassportNumber(String passportNumber) {
+        this.passportNumber = passportNumber;
     }
 
     @java.lang.Override
