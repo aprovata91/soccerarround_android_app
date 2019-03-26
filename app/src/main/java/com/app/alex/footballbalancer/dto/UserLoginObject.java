@@ -16,6 +16,14 @@ public class UserLoginObject implements Serializable {
     private String taxNumber;
     private String passportNumber;
 
+    /**
+     *
+     * @param id
+     * @param firstName
+     * @param lastName
+     * @param taxNumber
+     * @param passportNumber
+     */
     public UserLoginObject(String id, String firstName, String lastName, String taxNumber, String passportNumber) {
         this.id = id;
         this.firstName = firstName;

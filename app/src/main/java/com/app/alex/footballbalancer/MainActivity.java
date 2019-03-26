@@ -58,6 +58,9 @@ public class MainActivity extends RoboActionBarActivity {
         initDrawer();
     }
 
+    /**
+     *
+     */
     public void initDrawer(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
